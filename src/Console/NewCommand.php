@@ -56,8 +56,7 @@ class NewCommand extends SymfonyCommand
         $this->input  = $input;
         $this->output = new SymfonyStyle($input, $output);
 
-        // $this->path = getcwd().'/'.$input->getArgument('name');
-        $this->path = '/home/piotr/www/test333';
+        $this->path = getcwd().'/'.$input->getArgument('name');
 
         $installers = [
             // Installation\CheckOs::class,
