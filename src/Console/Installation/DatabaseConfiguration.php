@@ -4,6 +4,7 @@ namespace CMS\Installer\Console\Installation;
 
 use Symfony\Component\Process\Process;
 use CMS\Installer\Console\NewCommand;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DatabaseConfiguration
 {
@@ -94,6 +95,20 @@ class DatabaseConfiguration
 
 
     protected function saveConfig($config){
+        $capsule = new Capsule;
+
+        $capsule->addConnection([
+            'driver'    => 'mysql',
+            'host'      => $config['DB_HOST'],
+            'database'  => $config['DB_DATABASE'],
+            'username'  => $config['DB_USERNAME'],
+            'password'  => $config['DB_PASSWORD'],
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ]);
+
+        $capsule->setAsGlobal();
 
         foreach ($config as $key => $value) {
             $command = sprintf("sed -i '/%s=/c\%s=%s' .env", $key, $key, $value);
@@ -103,6 +118,9 @@ class DatabaseConfiguration
             $process->run(function ($type, $line) {
                 $this->command->output->write($line);
             });
+
+
+
         } 
 
     }

@@ -17,7 +17,9 @@
     "require": {
         "illuminate/support": "~5.0",
         "symfony/console": "~2.3|~3.0",
-        "symfony/process": "~2.3|~3.0"
+        "symfony/process": "~2.3|~3.0",
+        "illuminate/database": "^5.2",
+        "illuminate/hashing": "^5.2"
     },
     "bin": [
         "cms"

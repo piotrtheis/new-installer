@@ -3,11 +3,11 @@
 namespace CMS\Installer\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 
 class NewCommand extends SymfonyCommand
 {
@@ -57,7 +57,7 @@ class NewCommand extends SymfonyCommand
         $this->output = new SymfonyStyle($input, $output);
 
         // $this->path = getcwd().'/'.$input->getArgument('name');
-        $this->path = '/home/piotr/www/test3';
+        $this->path = '/home/piotr/www/test333';
 
         $installers = [
             // Installation\CheckOs::class,
@@ -68,14 +68,14 @@ class NewCommand extends SymfonyCommand
             // Installation\RunNpmInstall::class,
             // Installation\RunBowerInstall::class,
             // Installation\RunGulp::class,
-            // Installation\DatabaseConfiguration::class,
+            Installation\DatabaseConfiguration::class,
             // Installation\DatabaseMigration::class,
             // Installation\DatabaseSeeding::class,
 
             // Installation\DirMod::class,
-            Installation\InitGit::class,
+            // Installation\InitGit::class,
 
-            // Installation\MakeAdmin::class,
+            Installation\MakeAdmin::class,
             // Installation\MakeApacheVirtualHost::class,
         ];
 
