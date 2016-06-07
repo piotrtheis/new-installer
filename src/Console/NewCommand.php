@@ -59,21 +59,19 @@ class NewCommand extends SymfonyCommand
         $this->path = getcwd().'/'.$input->getArgument('name');
 
         $installers = [
-            // Installation\CheckOs::class,
-            // Installation\MakeCmsDir::class,
-            // Installation\CloneCmsRepo::class,
-            // Installation\ComposerInstall::class,
-            // Installation\CheckNodeVersion::class,
-            // Installation\RunNpmInstall::class,
-            // Installation\RunBowerInstall::class,
-            // Installation\RunGulp::class,
+            Installation\CheckOs::class,
+            Installation\MakeCmsDir::class,
+            Installation\CloneCmsRepo::class,
+            Installation\ComposerInstall::class,
+            Installation\CheckNodeVersion::class,
+            Installation\RunNpmInstall::class,
+            Installation\RunBowerInstall::class,
+            Installation\RunGulp::class,
             Installation\DatabaseConfiguration::class,
-            // Installation\DatabaseMigration::class,
-            // Installation\DatabaseSeeding::class,
-
-            // Installation\DirMod::class,
-            // Installation\InitGit::class,
-
+            Installation\DatabaseMigration::class,
+            Installation\DatabaseSeeding::class,
+            Installation\DirMod::class,
+            Installation\InitGit::class,
             Installation\MakeAdmin::class,
             // Installation\MakeApacheVirtualHost::class,
         ];
