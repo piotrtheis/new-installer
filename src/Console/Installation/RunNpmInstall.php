@@ -27,9 +27,7 @@ class RunNpmInstall
      */
     public function install()
     {
-        // if (! $this->command->output->confirm('Would you like to install the NPM dependencies?', true)) {
-        //     return;
-        // }
+        $this->command->output->section('Instalacja npm, npm forever gulp bower larvel-elixir');
 
         $this->command->output->writeln('<info>Instalacja  npm...</info>');
 

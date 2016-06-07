@@ -27,6 +27,8 @@ class ComposerInstall
      */
     public function install()
     {
+        $this->command->output->section('Instalacja, composer install');
+
         $process = new Process('composer install', $this->command->path);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {

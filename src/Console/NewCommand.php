@@ -2,14 +2,12 @@
 
 namespace CMS\Installer\Console;
 
-use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class NewCommand extends SymfonyCommand
 {
@@ -55,30 +53,30 @@ class NewCommand extends SymfonyCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->input = $input;
+        $this->input  = $input;
         $this->output = new SymfonyStyle($input, $output);
 
         // $this->path = getcwd().'/'.$input->getArgument('name');
-        $this->path = '/home/piotr/www/test';
-
+        $this->path = '/home/piotr/www/test3';
 
         $installers = [
             // Installation\CheckOs::class,
-            Installation\MakeCmsDir::class,
-            Installation\CloneCmsRepo::class,
-            Installation\ComposerInstall::class,
+            // Installation\MakeCmsDir::class,
+            // Installation\CloneCmsRepo::class,
+            // Installation\ComposerInstall::class,
             // Installation\CheckNodeVersion::class,
             // Installation\RunNpmInstall::class,
             // Installation\RunBowerInstall::class,
             // Installation\RunGulp::class,
-            Installation\DatabaseConfiguration::class,
-            Installation\DatabaseMigration::class,
+            // Installation\DatabaseConfiguration::class,
+            // Installation\DatabaseMigration::class,
             // Installation\DatabaseSeeding::class,
 
             // Installation\DirMod::class,
-            // Installation\InitGit::class,
+            Installation\InitGit::class,
 
             // Installation\MakeAdmin::class,
+            // Installation\MakeApacheVirtualHost::class,
         ];
 
         foreach ($installers as $installer) {

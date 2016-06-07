@@ -5,7 +5,7 @@ namespace CMS\Installer\Console\Installation;
 use Symfony\Component\Process\Process;
 use CMS\Installer\Console\NewCommand;
 
-class CloneCmsRepo
+class DirMod
 {
     protected $command;
     protected $name;
@@ -30,14 +30,9 @@ class CloneCmsRepo
      */
     public function install()
     {
-        $process = new Process('git clone git@bitbucket.org:etdcms/cms.git .', $this->command->path);
-
-        $process->setTimeout(null)->run(function ($type, $line) {
-            $this->command->output->write($line);
-        });
-
-        //remove .git folder
-        $process = new Process('rm -rf .git', $this->command->path);
+        $this->command->output->section('Zmiana uprawnień katalogów storage i bootstrap/cache');
+        
+        $process = new Process('sudo chmod 755 storage bootstrap/cache -R', $this->command->path);
 
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);

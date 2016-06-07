@@ -45,17 +45,17 @@ class DatabaseConfiguration
             return;
         }
 
-        if(!$user = $this->command->output->ask('user', $default = null))
+        if(!$user = $this->command->output->ask('user', $default = 'root'))
         {
             return;
         }
 
-        if(!$pass = $this->command->output->ask('pass', $default = null))
+        if(!$pass = $this->command->output->ask('pass', $default = 'root'))
         {
             return;
         }
 
-        if(!$db_name = $this->command->output->ask('db_name', $default = null))
+        if(!$db_name = $this->command->output->ask('db_name', $default = 'cms'))
         {
             return;
         }

@@ -27,8 +27,8 @@ class InitGit
      */
     public function install()
     {
-        
-
+        $this->initGit();
+        $this->gitAddRemote();
     }
 
 
@@ -46,7 +46,7 @@ class InitGit
 
             $this->command->output->block('Pierwszy commit gotowy', 'OK', 'fg=green', null, true);
 
-            $this->gitAddRemote($directory);
+            $this->gitAddRemote();
         } else 
         {
             $this->command->output->block('Nie to nie.', 'WARNING', 'fg=black;bg=cyan', ' ', true);
@@ -55,31 +55,31 @@ class InitGit
 
 
 
-    protected function gitAddRemote($directory)
+    protected function gitAddRemote()
     {
         $confirm = $this->command->output->confirm('Dodajemy link do zdalnego repo?', $default = true);
 
         if ($confirm) {
             $url = $this->command->output->ask('Podaj link do zdalnego repo', $default = null, $validator = null);
 
-            $process = new Process('git ls-remote ' . $url);
+            // $process = new Process('git ls-remote ' . $url);
 
-            $process->setTimeout(null)->run(function ($type, $line) use ($io, $directory) {
+            // $process->setTimeout(null)->run(function ($type, $line){
 
-                if (strstr($line, 'fatal')) {
-                    $this->command->output->error('Git twierdzi że takie repo nieistnieje, co Ty na to?');
+            //     if (strstr($line, 'fatal') && $line != 'fatal: remote origin already exists') {
+            //         $this->command->output->error('Git twierdzi że takie repo nieistnieje, co Ty na to?');
 
-                    $confirm = $this->command->output->confirm('Próbujemy jeszcze raz?', $default = true);
+            //         $confirm = $this->command->output->confirm('Próbujemy jeszcze raz?', $default = true);
 
-                    if ($confirm) {
-                        $this->gitAddRemote($directory);
-                    }
-                }
-            });
+            //         if ($confirm) {
+            //             $this->gitAddRemote();
+            //         }
+            //     }
+            // });
 
             $process = new Process('git remote add origin ' . $url . ' &&  git push -u origin master', $this->command->path);
 
-            $process->run(function ($type, $line) use ($io) {
+            $process->run(function ($type, $line) {
                 $this->command->output->text($line);
             });
         } else {
