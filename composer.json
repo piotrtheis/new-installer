@@ -1,0 +1,25 @@
+{
+    "name": "tysdever/cms-installer",
+    "minimum-stability": "dev",
+    "description": "Quick installer for etd cms.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Piotr Theis",
+            "email": "piotr_theis@o2.pl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CMS\\Installer\\": "src/"
+        }
+    },
+    "require": {
+        "illuminate/support": "~5.0",
+        "symfony/console": "~2.3|~3.0",
+        "symfony/process": "~2.3|~3.0"
+    },
+    "bin": [
+        "cms"
+    ]
+}
