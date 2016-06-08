@@ -28,17 +28,42 @@ class RunNpmInstall
     public function install()
     {
         $this->command->output->section('Instalacja npm, npm forever gulp bower larvel-elixir');
-
         $this->command->output->writeln('<info>Instalacja  npm...</info>');
 
-        $process = (new Process('npm set progress=true && npm install && npm install forever && npm install gulp && npm install laravel-elixir && npm install bower', $this->command->path))->setTimeout(null);
+        $process = new Process('npm set progress=true && npm install', $this->command->path);
 
         if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
             $process->setTty(true);
         }
 
-        $process->run(function ($type, $line) {
+        $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);
         });
+
+        $dependencies = [
+            'gulp' => 'npm set progress=true && npm install gulp',
+            'bower' => 'npm set progress=true && npm install bower',
+            'forever' => 'npm set progress=true && npm install forever',
+            'laravel-elixir' => 'npm set progress=true && npm install laravel-elixir',
+        ];
+
+        foreach ($dependencies as $library => $command) 
+        {
+            $process = new Process($library);
+
+            $process->run(function ($type, $line) use ($command){
+                if(str_contains($line, 'command not found')){
+                    $process = new Process($command, $this->command->path);
+
+                    if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+                        $process->setTty(true);
+                    }
+
+                    $process->run(function ($type, $line) {
+                        $this->command->output->write($line);
+                    });
+                }
+            });
+        }
     }
 }

@@ -31,6 +31,10 @@ class RunBowerInstall
 
         $process = new Process('bower install', $this->command->path);
 
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            $process->setTty(true);
+        }
+
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);
         });

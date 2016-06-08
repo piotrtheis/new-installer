@@ -27,8 +27,9 @@ class InitGit
      */
     public function install()
     {
-        $this->initGit();
-        $this->remoteRepo();
+        if($this->initGit()){
+            $this->remoteRepo();
+        }
     }
 
     protected function initGit()
@@ -43,14 +44,18 @@ class InitGit
             });
 
             $this->command->output->block('Pierwszy commit gotowy', 'OK', 'fg=green', null, true);
+
+            return true;
         } else {
             $this->command->output->block('Nie to nie.', 'WARNING', 'fg=black;bg=cyan', ' ', true);
         }
+
+        return false;
     }
 
     protected function remoteRepo()
     {
-        if ($this->checkRemoteRepo()) {
+        if (!$this->checkRemoteRepo()) {
             $confirm = $this->command->output->confirm('Dodajemy link do zdalnego repo?', $default = true);
 
             if ($confirm) {

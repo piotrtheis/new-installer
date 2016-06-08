@@ -32,7 +32,7 @@ class DirMod
     {
         $this->command->output->section('Zmiana uprawnień katalogów storage i bootstrap/cache');
         
-        $process = new Process('sudo chmod 755 storage bootstrap/cache -R', $this->command->path);
+        $process = new Process('sudo chmod 755 ../'. $this->name .' -R && find '. $this->command->path .' -type f -exec chmod 644 {} + && sudo chmod 777 ' . $this->command->path . '/storage -R && sudo chmod 777 ' . $this->command->path . '/bootstrap/cache  -R');
 
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);

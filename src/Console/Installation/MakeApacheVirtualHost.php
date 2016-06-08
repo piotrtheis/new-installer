@@ -29,7 +29,7 @@ class MakeApacheVirtualHost
      */
     public function install()
     {
-        $this->command->output->writeln('<info>Dodanie pliku vhosta do /etc/apache2/sites-available</info>');
+        $this->command->output->section('<info>Dodanie pliku vhosta do /etc/apache2/sites-available</info>');
 
         $file = '<VirtualHost *:80>
             ServerName '. $this->name .'.pl
@@ -38,7 +38,7 @@ class MakeApacheVirtualHost
             DocumentRoot '. $this->command->path .'/public
             DirectoryIndex index.php
 
-                <Directory '. $this->command->path .'/public/>
+                <Directory '. $this->command->path .'/>
                         AllowOverride All
                         Require all granted
                 </Directory>
@@ -54,12 +54,27 @@ class MakeApacheVirtualHost
 
 
 
-        $this->command->output->writeln('<info>a2ensite i restart</info>');
+        $this->command->output->section('<info>a2ensite i restart</info>');
 
-        $process = new Process('sudo /etc/init.d/apache2 restart');
+        $process = new Process('sudo a2ensite '. $this->name .'.conf && /etc/init.d/apache2 restart');
 
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);
         });
+
+
+        
+        $command = sprintf('sudo sed -i \'1s/^/127.0.1.1       %s\n/\' /etc/hosts && /etc/init.d/networking restart', $this->name . '.pl');
+
+        if (! $this->command->output->confirm('Czy chcesz dodać wpis do /etc/hosts['. $command .']?', true))
+        {
+            exit;
+        }
+
+        $process = new Process($command);
+
+        $process->setTimeout(null)->run(function ($type, $line) {
+            $this->command->output->write($line);
+        });    
     }
 }

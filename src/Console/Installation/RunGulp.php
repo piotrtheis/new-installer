@@ -29,8 +29,12 @@ class RunGulp
     {
         $this->command->output->writeln('<info>Instalacja  bower-a...</info>');
 
-        $process = new Process('gulp', $this->command->path);
+        $process = new Process('gulp && php artisan cms:update-scripts', $this->command->path);
 
+        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
+            $process->setTty(true);
+        }
+        
         $process->setTimeout(null)->run(function ($type, $line) {
             $this->command->output->write($line);
         });

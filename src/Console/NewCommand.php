@@ -56,8 +56,7 @@ class NewCommand extends SymfonyCommand
         $this->input  = $input;
         $this->output = new SymfonyStyle($input, $output);
 
-        // $this->path = getcwd().'/'.$input->getArgument('name');
-        $this->path = '/home/piotr/www/last-test';
+        $this->path = getcwd().'/'.$input->getArgument('name');
 
         $installers = [
             Installation\CheckOs::class,
@@ -75,6 +74,8 @@ class NewCommand extends SymfonyCommand
             Installation\InitGit::class,
             Installation\MakeAdmin::class,
             Installation\MakeApacheVirtualHost::class,
+            //TODO
+            // Installation\ServerRequirements::class,
         ];
 
         foreach ($installers as $installer) {

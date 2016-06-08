@@ -56,7 +56,7 @@ class MakeAdmin
             return;
         }
 
-        //TODO ask hidden
+
         if(!$password = $this->command->output->ask('password', $default = null))
         {
             return;
